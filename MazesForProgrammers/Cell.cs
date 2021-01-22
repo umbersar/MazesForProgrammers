@@ -7,10 +7,10 @@ namespace MazesForProgrammers {
         public int Row { get; private set; }//x co-ordinate of the cell
         public int Column { get; private set; }//y co-ordinate of the cell
         public List<Cell> Links { get; private set; }
-        public Cell North { get; set; }
-        public Cell South { get; set; }
-        public Cell East { get; set; }
-        public Cell West { get; set; }
+        public Cell? North { get; set; }
+        public Cell? South { get; set; }
+        public Cell? East { get; set; }
+        public Cell? West { get; set; }
 
         public Cell(int row, int column) {
             this.Row = row;
@@ -18,6 +18,7 @@ namespace MazesForProgrammers {
             this.Links = new List<Cell>();
         }
 
+        //Linked cell is different from a neighbouring cell. A cell can be a neighbour without being linked.
         public void Link(Cell cell, bool biDir = true) {
             this.Links.Add(cell);
 

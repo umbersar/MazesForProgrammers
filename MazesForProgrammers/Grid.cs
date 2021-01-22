@@ -44,7 +44,7 @@ namespace MazesForProgrammers {
             }
         }
 
-        private Cell GetCell(int row, int col) {
+        public Cell GetCell(int row, int col) {
             if (row < 0 || col < 0 || row + 1 > Rows || col + 1 > Columns)
                 return null;
             else
