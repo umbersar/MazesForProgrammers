@@ -6,13 +6,10 @@ namespace MazesForProgrammers {
     public class Grid {
         public int Rows { get; private set; }
         public int Columns { get; private set; }
-
-        //public Cell[,] Cells { get; private set; }
         public List<List<Cell>> Cells { get; private set; }
         public Grid(int rows, int columns) {
             this.Rows = rows;
             this.Columns = columns;
-            //this.Cells = new Cell[rows, columns];
             this.Cells = new List<List<Cell>>(rows * columns);
 
             Initialize();
@@ -26,11 +23,16 @@ namespace MazesForProgrammers {
         private void Prepare_Grid() {
             for (int i = 0; i < Rows; i++) {
                 for (int j = 0; j < Columns; j++) {
-                    //Cells[i, j] = new Cell(i, j);
                     Cells[i][j] = new Cell(i, j);
                 }
             }
         }
+
+        /*   c0     c3 
+         row0 * * * *
+         row1 * * * *
+         row2 * * * * 
+        */
         private void Configure_Cells() {
             for (int i = 0; i < Rows; i++) {
                 for (int j = 0; j < Columns; j++) {
@@ -65,9 +67,18 @@ namespace MazesForProgrammers {
             return GetCell(randRow, randCol);
         }
 
-        //public IEnumerable<Cell> EachRow() {
+        public IEnumerable<List<Cell>> EachRow() {
+            foreach (List<Cell> row in Cells) {
+                yield return row;
+            }
+        }
 
-        // }
-
+        public IEnumerable<Cell> EachCell() {
+            foreach (List<Cell> row in Cells) {
+                foreach (Cell col in row) {
+                    yield return col;
+                }
+            }
+        }
     }
 }
