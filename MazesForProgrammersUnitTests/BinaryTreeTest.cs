@@ -11,7 +11,8 @@ namespace MazesForProgrammersUnitTests {
         public void TestBinaryTree() {
             Grid grd = new Grid(3, 4);
             BinaryTree.On(grd);
-            string output = grd.ToString();            
+            string output = grd.ToString();
+            Console.WriteLine(output);
         }
     }
 }

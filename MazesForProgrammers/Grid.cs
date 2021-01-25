@@ -88,23 +88,25 @@ namespace MazesForProgrammers {
             sb.Append("+");
 
             for (int i = 0; i < Columns; i++) {
-                sb.Append("---+");
+                sb.Append("---+");//this is the top row/northernmost boundary
             }
 
             sb.AppendLine();
 
             foreach (List<Cell> row in EachRow()) {
-                var top = new StringBuilder("|");
-                var bottom = new StringBuilder("+");
+                var easternSection = new StringBuilder("|");
+                var bottom = new StringBuilder("+");//southern_section
 
                 foreach (Cell cell in row) {
+                    string bodyOfCell = "   ";//hard code 3 horizontal spaces for cell contents
                     var east_boundary = cell.IsLinked(cell.East) ? " " : "|";
-                    top.Append(east_boundary);
+                    easternSection.Append(bodyOfCell).Append(east_boundary);
 
+                    var cell_corner = "+";
                     var south_boundary = cell.IsLinked(cell.South) ? "   " : "---";
-                    bottom.Append(south_boundary);
+                    bottom.Append(south_boundary).Append(cell_corner);
                 }
-                sb.AppendLine(top.ToString());
+                sb.AppendLine(easternSection.ToString());
                 sb.AppendLine(bottom.ToString());
             }
 
