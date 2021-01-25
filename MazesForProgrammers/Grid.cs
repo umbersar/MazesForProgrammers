@@ -22,9 +22,12 @@ namespace MazesForProgrammers {
 
         private void Prepare_Grid() {
             for (int i = 0; i < Rows; i++) {
+                var row = new List<Cell>();
                 for (int j = 0; j < Columns; j++) {
-                    Cells[i][j] = new Cell(i, j);
+                    row.Add(new Cell(i, j));
                 }
+
+                this.Cells.Add(row);
             }
         }
 
@@ -79,6 +82,33 @@ namespace MazesForProgrammers {
                     yield return col;
                 }
             }
+        }
+        public override string ToString() {
+            StringBuilder sb = new StringBuilder();
+            sb.Append("+");
+
+            for (int i = 0; i < Columns; i++) {
+                sb.Append("---+");
+            }
+
+            sb.AppendLine();
+
+            foreach (List<Cell> row in EachRow()) {
+                var top = new StringBuilder("|");
+                var bottom = new StringBuilder("+");
+
+                foreach (Cell cell in row) {
+                    var east_boundary = cell.IsLinked(cell.East) ? " " : "|";
+                    top.Append(east_boundary);
+
+                    var south_boundary = cell.IsLinked(cell.South) ? "   " : "---";
+                    bottom.Append(south_boundary);
+                }
+                sb.AppendLine(top.ToString());
+                sb.AppendLine(bottom.ToString());
+            }
+
+            return sb.ToString();
         }
     }
 }
