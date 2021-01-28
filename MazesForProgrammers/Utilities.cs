@@ -9,5 +9,11 @@ namespace MazesForProgrammers {
 
             return list[rnd.Next(list.Count)];
         }
+
+        public enum DrawMode {
+            Background,
+            Walls,
+            Path
+        }
     }
 }

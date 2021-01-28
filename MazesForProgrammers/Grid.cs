@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Drawing;
 using System.Text;
+using static MazesForProgrammers.Utilities;
 
 namespace MazesForProgrammers {
     public class Grid {
@@ -54,7 +56,7 @@ namespace MazesForProgrammers {
                 return this.Cells[row][col];
         }
 
-        public Cell this[int row, int col] {
+        public Cell this[int row, int col] {//index operator
             get { return GetCell(row, col); }
         }
 
@@ -111,6 +113,45 @@ namespace MazesForProgrammers {
             }
 
             return sb.ToString();
+        }
+
+        public Bitmap ToPng(int cellSize = 10) {
+            int image_width = cellSize * Columns;
+            int image_height = cellSize * Rows;
+
+            var bitmap = new Bitmap(image_width + 1, image_height + 1);
+
+            using (var graphic = Graphics.FromImage(bitmap)) {
+                graphic.Clear(Color.White);//background color (white) 
+
+                // Paint the walls
+                foreach (Cell cell in EachCell()) {
+                    var x1 = cell.Column * cellSize;
+                    var y1 = cell.Row * cellSize;//northwest (x1,y1) corner
+
+                    var x2 = (cell.Column + 1) * cellSize;
+                    var y2 = (cell.Row + 1) * cellSize;//southeast (x2,y2) corner
+
+                    var pen = Pens.Black;//wall color (black)
+
+                    if (!cell.IsLinked(cell.North)) {//check if the cell has any neighbors to the north, and if not, we draw that wall
+                        graphic.DrawLine(pen, new Point { X = x1, Y = y1 }, new Point { X = x2, Y = y1 });
+                    }
+                    if (!cell.IsLinked(cell.West)) {//check if the cell has any neighbors to the west, and if not, we draw that wall
+                        graphic.DrawLine(pen, new Point { X = x1, Y = y1 }, new Point { X = x1, Y = y2 });
+                    }
+                    if (!cell.IsLinked(cell.East)) {
+                        graphic.DrawLine(pen, new Point { X = x2, Y = y1 }, new Point { X = x2, Y = y2 });
+                    }
+                    if (!cell.IsLinked(cell.South)) {
+                        graphic.DrawLine(pen, new Point { X = x1, Y = y2 }, new Point { X = x2, Y = y2 });
+                    }
+
+                }
+                graphic.Save();
+            }
+
+            return bitmap;
         }
     }
 }

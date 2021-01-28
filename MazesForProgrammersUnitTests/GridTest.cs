@@ -9,6 +9,7 @@ namespace MazesForProgrammersUnitTests {
             Grid grd = new Grid(3, 4);
 
             Cell bottomLeftCell = grd.GetCell(2, 3);
+            Assert.AreEqual(bottomLeftCell, grd[2, 3]);//test the indexing operator
             Assert.IsNull(bottomLeftCell.South);
             Assert.IsNull(bottomLeftCell.East);
 
